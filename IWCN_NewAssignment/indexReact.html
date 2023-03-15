@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ReactJS Example</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone@7.15.4/babel.min.js"></script>
+
+    <script type="text/babel">
+    // ReactJS code goes here
+    
+    const { useState } = React;
+
+    function EditableTable() {
+    const [data, setData] = useState([
+        ['Onboarding call', '', '', '', '', ''],
+        ['Google search console Access', '', '', '', '', ''],
+        ['Google Analytics Access', '', '', '', '', ''],
+        ['Website Access', '', '', '', '', ''],
+        ['Technical Audit', '', '', '', '', ''],
+        ['Anchor Text and Semantic Analisis', '', '', '', '', ''],
+        ['Competitor Analysis', '', '', '', '', ''],
+        ['Anchor text / URL Mapping', '', '', '', '', ''],
+        ['Google Data Studio Report + Local Reporting Suite', '', '', '', '', ''],
+        ['Site Level Optimization', '', '', '', '', ''],
+        ['On Page Optimization', '', '', '', '', ''],
+        ['Content Creation', '', '', '', '', ''],
+        ['Content Publishing', '', '', '', '', ''],
+        ['Premium Press Release', '', '', '', '', ''],
+        ['Athority Niche Placements', '', '', '', '', ''],
+        ['Review Management', '', '', '', '', ''],
+        ['Index Links', '', '', '', '', ''],
+        ['Video Recap', '', '', '', '', ''],
+    ]);
+
+    const handleChange = (event, row, col) => {
+        const newData = [...data];
+        newData[row][col] = event.target.value;
+        setData(newData);
+    };
+
+    const handleSubmit = () => {
+        // Code to post data to API
+        console.log(data);
+    };
+
+    return (
+        <table border="1">
+            <thead>
+                <tr>
+                    <th colSpan="6">MONTH 1</th>
+                </tr>
+            </thead>
+            <tbody>
+                {data.map((row, rowIndex) => (
+                    <tr key={rowIndex}>
+                        {row.map((cell, colIndex) => (
+                            <td key={colIndex}>
+                                <input type="text" value={cell} onChange={(event) => handleChange(event, rowIndex, colIndex)} />
+                            </td>
+                        ))}
+                    </tr>
+                ))}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colSpan="6">
+                        <button onClick={handleSubmit}>Submit</button>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    );
+}
+      // const container = document.getElementById('root')
+      // const root = createRoot(container);
+      // root.render(<EditableTable />)
+
+      ReactDOM.render(<EditableTable />, document.getElementById('root'));
+    </script>
+  </body>
+</html>

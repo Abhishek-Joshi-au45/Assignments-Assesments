@@ -1,51 +1,52 @@
+// server.js
 const express = require('express');
-const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-
+const cors = require('cors');
 const app = express();
-const PORT = 3000;
-
+const port = 3001;
 
 const { initDB } = require('./dbConfig')
 
-//connect to DB
+ //connect to DB
 initDB()
 
+// // Connect to MongoDB (replace 'your_connection_string' with your actual MongoDB connection string)
+// mongoose.connect('your_connection_string', { useNewUrlParser: true, useUnifiedTopology: true });
 
-// Set up middleware
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(cors());
 
-
-// Create the note schema
+// Create a Note schema and model using Mongoose
 const noteSchema = new mongoose.Schema({
-  title: String,
-  body: String
+  content: String,
 });
 
-// Create the note model
 const Note = mongoose.model('Note', noteSchema);
 
-// Get all notes
-app.get('/notes', async (req, res) => {
+// API routes
+app.get('/api/notes', async (req, res) => {
   const notes = await Note.find();
-  res.send(notes);
+  res.json(notes);
 });
 
-// Add a new note
-app.post('/notes', async (req, res) => {
-  const { title, body } = req.body;
-  const note = new Note({ title, body });
-  await note.save();
-  res.send(note);
+app.post('/api/notes', async (req, res) => {
+  const { content } = req.body;
+  const newNote = new Note({ content });
+  await newNote.save();
+  res.status(201).json(newNote);
 });
 
-// Delete a note by ID
-app.delete('/notes/:id', async (req, res) => {
+app.delete('/api/notes/:id', async (req, res) => {
   const { id } = req.params;
   await Note.findByIdAndDelete(id);
-  res.send({ message: 'Note deleted successfully' });
+  res.sendStatus(204);
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
 });
+
+
+
+
+

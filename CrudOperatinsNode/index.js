@@ -14,5 +14,5 @@ initDB()
 app.use('/Employees', employeeRouter)
 
 app.listen(8000,()=>{
-    console.log("Server started at 80000")
+    console.log("Server started at 8000")
 })

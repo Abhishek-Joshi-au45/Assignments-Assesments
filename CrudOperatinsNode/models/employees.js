@@ -4,14 +4,9 @@ const mongoose = require('mongoose')
 const EmployeesSchema = new mongoose.Schema({
   name: {
     type: String,
-    unique: true,
     required: true,
     // lowercase: true,
     maxLength: 50
-  },
-  Joining_date : {
-    type: Date,
-    default: Date.now()
   },
   Employees_id: {
     type: Number,

@@ -1,0 +1,16 @@
+/* src/App.css */
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+}
+
+.tabs button {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.tab-content {
+  padding: 20px;
+  border-top: 1px solid #ccc;
+}

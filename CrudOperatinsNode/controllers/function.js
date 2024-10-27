@@ -1,32 +1,33 @@
-const EmployeeModel = require('../models/employees')
+const postModel = require('../models/Post')
 
-const getEmployees = async (req, res) => {
+const getPost = async (req, res) => {
 
   try {
-    const employees = await EmployeeModel.find();
-    res.send({ status: 'success', employees })
+    const post = await postModel.find();
+    res.json(post)
+    //res.send({ status: 'success', post })
   } catch (err) {
-    res.status(500).send({ status: 'error', msg: 'error fetching movies' })
+    res.status(500).send({ status: 'error', msg: 'error fetching post' })
   }
 }
 
 
-const getEmployeesByID = async (req, res) => {
-  const { EmployeeID } = req.params
+const getPostByID = async (req, res) => {
+  const { PostID } = req.params
 
-  const Employee = await EmployeeModel.findById(EmployeeID)
-  if (Employee) {
-    res.send(Employee)
+  const Post = await postModel.findById(PostID)
+  if (Post) {
+    res.send(Post)
   } else {
     res.status(404).send({ status: 'error', msg: 'Not found' })
   }
 }
 
 
-const postEmployees = async (req, res) => {
-  const EmployeesData = req.body
+const postData = async (req, res) => {
+  const Data = req.body
   try {
-    const result = await EmployeeModel.create(EmployeesData)
+    const result = await postModel.create(Data)
     res.status(200).send(result)
   } catch (err) {
     res.status(500).send(err)
@@ -35,13 +36,13 @@ const postEmployees = async (req, res) => {
 }
 
 
-const updateEmployeeById = async (req, res) => {
+const updatePostById = async (req, res) => {
 
-  const { EmployeeID } = req.params
-  const updatedEmployeeData = req.body //{language, name, id}
+  const { PostID } = req.params
+  const updatedPostData = req.body //{language, name, id}
 
   try {
-    const updatedResult = await EmployeeModel.findByIdAndUpdate(EmployeeID, updatedEmployeeData, { new: true, runValidators: true })
+    const updatedResult = await postModel.findByIdAndUpdate(PostID, updatedPostData, { new: true, runValidators: true })
     res.send(updatedResult)
   } catch (err) {
     res.status(500).send(err)
@@ -49,18 +50,18 @@ const updateEmployeeById = async (req, res) => {
 }
 
 
-const deleteEmployeeByID = async (req, res) => {
-  const { EmployeeID } = req.params
+const deletePostByID = async (req, res) => {
+  const { PostID } = req.params
 
-  const deletedData = await EmployeeModel.findByIdAndDelete(EmployeeID)
+  const deletedData = await postModel.findByIdAndDelete(PostID)
   res.send(deletedData)
 }
 
 
 module.exports = {
-  getEmployees,
-  getEmployeesByID,
-  postEmployees,
-  updateEmployeeById,
-  deleteEmployeeByID
+  getPost,
+  getPostByID,
+  postData,
+  updatePostById,
+  deletePostByID
 }
